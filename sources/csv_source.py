@@ -8,9 +8,5 @@ class CsvSource(BaseSource):
     async def fetch(self) -> list[dict]:
         with open(self.file_path, mode="r", encoding="utf-8") as file:
             csv_reader = csv.DictReader(file)
-            result = []
 
-            for row in csv_reader:
-                result.append(row)
-
-            return result
+            return list(csv_reader)
