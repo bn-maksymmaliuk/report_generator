@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from shared.types import Employee
+from app.shared.types import Employee
 
 class BaseReport(ABC):
     @abstractmethod

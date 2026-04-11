@@ -1,11 +1,11 @@
 import logging
 import time
 
-from outputs.base import BaseOutput
-from reports.base import BaseReport
-from sources.base import BaseSource
+from app.outputs.base import BaseOutput
+from app.reports.base import BaseReport
+from app.sources.base import BaseSource
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("RUNNER")
 
 class ReportRunner:
     def __init__(self, output: BaseOutput, source: BaseSource, report: BaseReport):

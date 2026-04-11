@@ -1,6 +1,6 @@
 import json
 from datetime import datetime
-from outputs.base import BaseOutput
+from app.outputs.base import BaseOutput
 import logging
 
 logger = logging.getLogger(__name__)
@@ -13,7 +13,7 @@ class JsonOutput(BaseOutput):
 
         try:
             logger.info(f"Writing data to {len(data)} employees.")
-            
+
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             file_path = f"{self.output}/employees-{timestamp}.json"
 
