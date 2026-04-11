@@ -9,5 +9,13 @@ class BaseSource(ABC):
         ...
 
     @staticmethod
-    def normalize_row(row: dict) -> dict:
-        return {key.strip().lower(): val for key, val in row.items()}
+    def normalize_row(row: dict) -> Employee:
+        normalized = {key.strip().lower(): val for key, val in row.items()}
+
+        return Employee(
+            id=normalized.get("id", '').strip(),
+            name=normalized.get("name", '').strip(),
+            age=normalized.get("age", '').strip(),
+            job=normalized.get("job", '').strip(),
+            salary=normalized.get("salary", '').strip(),
+        )
