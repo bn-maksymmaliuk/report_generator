@@ -1,8 +1,7 @@
 from abc import ABC, abstractmethod
 
-from shared.types import Employee, EmployeeReportRow
-
+from shared.types import Employee
 
 class BaseReport(ABC):
     @abstractmethod
-    async def process(self, data: list[Employee]) -> list[EmployeeReportRow]: ...
+    async def process(self, data: list[Employee]) -> list[dict]: ...

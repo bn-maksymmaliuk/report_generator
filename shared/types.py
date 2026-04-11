@@ -1,4 +1,4 @@
-from typing import TypedDict
+from typing import TypedDict, Literal
 
 
 class Employee(TypedDict):
@@ -8,6 +8,4 @@ class Employee(TypedDict):
     job: str
     salary: str
 
-class EmployeeReportRow(TypedDict):
-    name: str
-    job: str
+EmployeeFieldName = Literal["id", "name", "age", "job", "salary"]
