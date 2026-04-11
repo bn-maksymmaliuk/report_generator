@@ -1,6 +1,9 @@
 from abc import ABC, abstractmethod
+import logging
 
 from shared.types import Employee
+
+logger = logging.getLogger(__name__)
 
 class BaseSource(ABC):
     @abstractmethod
@@ -10,12 +13,16 @@ class BaseSource(ABC):
 
     @staticmethod
     def normalize_row(row: dict) -> Employee:
-        normalized = {key.strip().lower(): val for key, val in row.items()}
+        normalized = {k.strip().lower(): v.strip() for k, v in row.items()}
 
-        return Employee(
-            id=normalized.get("id", '').strip(),
-            name=normalized.get("name", '').strip(),
-            age=normalized.get("age", '').strip(),
-            job=normalized.get("job", '').strip(),
-            salary=normalized.get("salary", '').strip(),
-        )
+        try:
+            return Employee(
+                id=normalized["id"],
+                name=normalized["name"],
+                age=normalized["age"],
+                job=normalized["job"],
+                salary=normalized["salary"],
+            )
+        except KeyError as e:
+            logger.error(f"Missing field: {e.args[0]}")
+            raise ValueError(f"Missing field: {e.args[0]}")
