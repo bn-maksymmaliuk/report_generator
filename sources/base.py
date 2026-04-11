@@ -1,7 +1,13 @@
 from abc import ABC, abstractmethod
 
+from shared.types import Employee
+
 class BaseSource(ABC):
     @abstractmethod
-    async def fetch(self) -> list[dict]: ...
+    async def fetch(self) -> list[Employee]:
+        """Fetch and return normalized data."""
+        ...
 
-    async def normalize_row(self, row: dict) -> dict: ...
+    @staticmethod
+    def normalize_row(row: dict) -> dict:
+        return {key.strip().lower(): val for key, val in row.items()}
