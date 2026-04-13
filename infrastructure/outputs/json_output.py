@@ -1,6 +1,6 @@
 import json
 from datetime import datetime
-from app.outputs.base import BaseOutput
+from domain.outputs.base import BaseOutput
 import logging
 
 logger = logging.getLogger(__name__)

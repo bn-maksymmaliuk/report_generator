@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 import logging
 
-from app.shared.types import Employee
+from domain.types import Employee
 
 logger = logging.getLogger(__name__)
 

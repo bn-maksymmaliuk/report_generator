@@ -1,6 +1,6 @@
 import asyncio
 import logging
-from app.config.logger_setup import setup_logging
+from config.logger_setup import setup_logging
 
 setup_logging()
 

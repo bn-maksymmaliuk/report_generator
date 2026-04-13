@@ -1,9 +1,9 @@
 import logging
 import time
 
-from app.outputs.base import BaseOutput
-from app.reports.base import BaseReport
-from app.sources.base import BaseSource
+from domain.outputs.base import BaseOutput
+from domain.reports.base import BaseReport
+from domain.sources.base import BaseSource
 
 logger = logging.getLogger("RUNNER")
 

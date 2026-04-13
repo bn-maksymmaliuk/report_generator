@@ -1,7 +1,7 @@
 import logging
 
-from app.reports.base import BaseReport
-from app.shared.types import Employee, EmployeeFieldName
+from domain.reports.base import BaseReport
+from domain.types import Employee, EmployeeFieldName
 
 logger = logging.getLogger(__name__)
 

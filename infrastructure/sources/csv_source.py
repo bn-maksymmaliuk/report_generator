@@ -1,5 +1,5 @@
-from app.shared.types import Employee
-from app.sources.base import BaseSource
+from domain.types import Employee
+from domain.sources.base import BaseSource
 import csv
 
 class CsvSource(BaseSource):
