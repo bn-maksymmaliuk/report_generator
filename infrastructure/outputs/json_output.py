@@ -1,26 +1,29 @@
 import json
-from datetime import datetime
-from domain.outputs.base import BaseOutput
 import logging
+from datetime import datetime
+from pathlib import Path
+
+import aiofiles
+
+from domain.outputs.base import BaseOutput
 
 logger = logging.getLogger(__name__)
 
+
 class JsonOutput(BaseOutput):
-    def __init__(self, output: str):
-        self.output = output
+    def __init__(self, output_dir: str, file_prefix: str = "report"):
+        self.output_dir = Path(output_dir)
+        self.file_prefix = file_prefix
 
     async def write(self, data: list[dict]) -> str:
+        self.output_dir.mkdir(parents=True, exist_ok=True)
 
-        try:
-            logger.info(f"Writing data to {len(data)} employees.")
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
+        file_path = self.output_dir / f"{self.file_prefix}-{timestamp}.json"
 
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            file_path = f"{self.output}/employees-{timestamp}.json"
+        payload = json.dumps(data, indent=4, ensure_ascii=False)
+        async with aiofiles.open(file_path, mode="w", encoding="utf-8") as file:
+            await file.write(payload)
 
-            with open(file_path, mode="w", encoding="utf-8") as file:
-                json.dump(data, file, indent=4, ensure_ascii=False)
-
-            return file_path
-        except FileNotFoundError:
-            logger.error(f"Dir {self.output} not found.")
-            raise
+        logger.info(f"Wrote {len(data)} rows to {file_path}")
+        return str(file_path)
