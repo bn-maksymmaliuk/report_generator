@@ -5,29 +5,47 @@ from domain.types import Employee, EmployeeFieldName
 
 logger = logging.getLogger(__name__)
 
+BASE_FIELDS: tuple[tuple[EmployeeFieldName, str], ...] = (
+    ("name", "Name"),
+    ("job", "Job"),
+)
+
+
 class EmployeeReport(BaseReport):
-    def __init__(self, min_salary: int = 3500, extra_fields: list[EmployeeFieldName] = []):
+    def __init__(
+        self,
+        min_salary: int = 3500,
+        extra_fields: list[EmployeeFieldName] | None = None,
+    ):
         self.min_salary = min_salary
-        self.extra_fields = extra_fields
+        self.extra_fields: list[EmployeeFieldName] = list(extra_fields or [])
 
     async def process(self, data: list[Employee]) -> list[dict]:
-        logger.info(f"Processing {len(data)} employees with min_salary={self.min_salary}")
-
-        if len(self.extra_fields) > 0:
-            logger.info(f"Found {len(self.extra_fields)} extra fields")
+        logger.info(
+            f"Processing {len(data)} employees with min_salary={self.min_salary}"
+        )
 
         result: list[dict] = []
+        skipped = 0
 
         for row in data:
-            salary = int(row["salary"])
+            try:
+                salary = int(row["salary"])
+            except (KeyError, TypeError, ValueError):
+                skipped += 1
+                continue
 
-            if salary > self.min_salary:
-                base = {"name": row["name"], "job": row["job"]}
-                extra = {field: row[field] for field in self.extra_fields}
-                row_data = {**base, **extra}
+            if salary <= self.min_salary:
+                continue
 
-                result.append(row_data)
+            item: dict = {label: row[field] for field, label in BASE_FIELDS}
+            for field in self.extra_fields:
+                item[field] = row[field]
+
+            result.append(item)
+
+        if skipped:
+            logger.warning(f"Skipped {skipped} rows with invalid salary")
 
         logger.info(f"Found {len(result)} employees matching criteria")
-
         return result
