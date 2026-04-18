@@ -1,13 +1,9 @@
-import asyncio
-import logging
-from config.logger_setup import setup_logging
+import uvicorn
 
-setup_logging()
+from api.app import create_app
 
-logger = logging.getLogger(__name__)
+app = create_app()
 
-async def main():
-    logger.info("Application started")
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, log_config=None)
