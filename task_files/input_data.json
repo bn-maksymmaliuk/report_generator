@@ -1,0 +1,7 @@
+[
+  {"ID": "1", "Name": "Ivan", "Age": "38", "Job": "Engineer", "Salary": "3500"},
+  {"ID": "2", "Name": "Olena", "Age": "30", "Job": "Biologist", "Salary": "4000"},
+  {"ID": "3", "Name": "Maksym", "Age": "25", "Job": "Administrator", "Salary": "1500"},
+  {"ID": "4", "Name": "Yuliia", "Age": "28", "Job": "Designer", "Salary": "2800"},
+  {"ID": "5", "Name": "Oleksandr", "Age": "45", "Job": "Manager", "Salary": "5500"}
+]
