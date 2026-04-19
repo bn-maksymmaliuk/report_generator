@@ -37,8 +37,6 @@ def build_report(request: ReportJobRequest) -> BaseReport:
             min_salary=request.params.min_salary,
             extra_fields=request.params.extra_fields,
         )
-    raise ValueError(f"Unsupported report type: {request.report_type.value}")
-
 
 def build_pipeline(request: ReportJobRequest) -> ReportRunner:
     return ReportRunner(
