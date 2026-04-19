@@ -7,12 +7,16 @@ LOG_DIR = BASE_DIR / "logs"
 LOG_DIR.mkdir(exist_ok=True)
 
 def setup_logging() -> None:
+    root_logger = logging.getLogger()
+    if getattr(root_logger, "_report_generator_configured", False):
+        return
+    root_logger._report_generator_configured = True
+
     formatter = logging.Formatter(
         fmt='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
         datefmt='%Y-%m-%d %H:%M:%S'
     )
 
-    root_logger = logging.getLogger()
     root_logger.setLevel(logging.DEBUG)
 
     console_handler = logging.StreamHandler()
